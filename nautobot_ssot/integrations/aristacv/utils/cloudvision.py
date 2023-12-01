@@ -276,6 +276,7 @@ def get_devices(client):
     else:
         req = services.DeviceStreamRequest()
     responses = device_stub.GetAll(req)
+    i=0
     devices = []
     for resp in responses:
         device = {
@@ -288,6 +289,9 @@ def get_devices(client):
             "system_mac_address": resp.value.system_mac_address.value,
         }
         devices.append(device)
+        if self.job.debug:
+            self.job.logger.debug(f"Device {i}: {device.hostname}.")
+            i=i+1
     return devices
 
 
