@@ -191,6 +191,9 @@ class CloudvisionAdapter(DiffSync):
                     device=dev.name,
                     uuid=None,
                 )
+                if self.job.debug:
+                   self.job.logger.info(f"IP Address interface {intf['interface']} on {dev.name} loaded.
+                    {new_ip.get_attrs()} ")
                 try:
                     self.add(new_ip)
                 except ObjectAlreadyExists as err:
