@@ -193,7 +193,7 @@ class CloudvisionAdapter(DiffSync):
                 )
                 if self.job.debug:
                    self.job.logger.info(f"""IP Address interface {intf['interface']} on {dev.name} loaded.
-                    {new_ip.get_attrs()} """)
+                    {new_ip.__getattribute__} """)
                 try:
                     self.add(new_ip)
                 except ObjectAlreadyExists as err:
