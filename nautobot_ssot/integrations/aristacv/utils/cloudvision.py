@@ -640,6 +640,26 @@ def get_interface_description(client: CloudvisionApi, dId: str, interface: str):
     return ""
 
 
+def get_vrf_interface(client: CloudvisionApi, dId: str, interface: str) -> str:
+    """Gets vrf for specificic interface configured from specified device.
+
+    Args:
+        client (CloudvisionApi): Cloudvision connection.
+        dId (str): Device ID to retrieve IP Addresses and associated interfaces for.
+        interface (str): Name of interface to get description for.
+    """
+    pathElts = ["Sysdb", "l3", "intf", "config", "intfConfig", interface]
+    query = [create_query([(pathElts, [])], dId)]
+    query = unfreeze_frozen_dict(query)
+
+    for batch in client.get(query):
+        for notif in batch["notifications"]:
+            results = notif["updates"]
+            if results.get("vrf"):
+                return results["vrf"]["value"]
+            
+    return "Unknown"
+
 def get_ip_interfaces(client: CloudvisionApi, dId: str):
     """Gets interfaces with IP Addresses configured from specified device.
 
@@ -663,8 +683,9 @@ def get_ip_interfaces(client: CloudvisionApi, dId: str):
                         if results["addrWithMask"] != "0.0.0.0/0"
                         else results.get("virtualAddrWithMask"),
                     }
-                )
+                )         
     return ip_intfs
+
 
 
 def get_cvp_version():

@@ -185,6 +185,9 @@ class CloudvisionAdapter(DiffSync):
                 new_ip = self.ipaddr(
                     address=intf["address"],
                     interface=intf["interface"],
+                    vrf=cloudvision.get_vrf_interface(
+                        client=self.conn, dId=dev.serial, interface=intf["interface"]
+                    ),
                     device=dev.name,
                     uuid=None,
                 )
