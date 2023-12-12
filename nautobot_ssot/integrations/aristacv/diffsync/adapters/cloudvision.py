@@ -138,7 +138,13 @@ class CloudvisionAdapter(DiffSync):
                     device.add_child(new_port)
                     if self.job.debug:
                         self.job.logger.debug(
-                            f"""Added {port['interface']} for {device.name}. \n description: {port_description}\n enabled: {port['enabled']}\n status: {port_status}\n transceiver: {transceiver}\n port_type: {port_type}\n mode: {port_mode}"""
+                            f'''Added {port['interface']} for {device.name}.
+                              description: {port_description}
+                              enabled: {port['enabled']}
+                              status: {port_status}
+                              transceiver: {transceiver} 
+                              port_type: {port_type}
+                              mode: {port_mode}'''
                         )
                 except ObjectAlreadyExists as err:
                     self.job.logger.warning(
@@ -190,12 +196,12 @@ class CloudvisionAdapter(DiffSync):
                 )
                 if self.job.debug:
                     self.job.logger.info(
-                        f"""IP Address interface {intf['interface']} on {dev.name} loaded. 
-                                        {new_ip.address},
-                                        {new_ip.interface},
-                                        {new_ip.device},
-                                        {cloudvision.get_vrf_interface(client=self.conn, dId=dev.serial, interface=intf["interface"]),
-                                        }"""
+                        f'''IP Address interface {intf['interface']} on {dev.name} loaded. 
+                                        ip: {new_ip.address}
+                                        interface: {new_ip.interface}
+                                        device: {new_ip.device}
+                                        vrf: {cloudvision.get_vrf_interface(client=self.conn, dId=dev.serial, interface=intf["interface"])
+                                        }'''
                     )
                 try:
                     self.add(new_ip)
