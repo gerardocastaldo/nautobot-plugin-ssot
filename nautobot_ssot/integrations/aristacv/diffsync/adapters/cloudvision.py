@@ -198,7 +198,7 @@ class CloudvisionAdapter(DiffSync):
                     self.job.logger.info(
                         f"""IP Address interface {intf['interface']} on {dev.name} loaded. \n
                                         ip: {new_ip.address} \n
-                                        interface: {new_ip.intrface} \n
+                                        interface: {new_ip.interface} \n
                                         device: {new_ip.device} \n
                                         vrf: { cloudvision.get_vrf_interface(client=self.conn, dId=dev.serial, interface=intf["interface"]) } \n
                         """
