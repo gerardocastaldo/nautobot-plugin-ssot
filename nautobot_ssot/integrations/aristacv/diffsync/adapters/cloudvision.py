@@ -138,12 +138,12 @@ class CloudvisionAdapter(DiffSync):
                     device.add_child(new_port)
                     if self.job.debug:
                         self.job.logger.debug(
-                            f"""Added {port['interface']} for {device.name}.
-                              description: {port_description}
-                              enabled: {port['enabled']}
-                              status: {port_status}
-                              transceiver: {transceiver} 
-                              port_type: {port_type}
+                            f"""Added {port['interface']} for {device.name}. \n
+                              description: {port_description} \n
+                              enabled: {port['enabled']} \n
+                              status: {port_status} \n
+                              transceiver: {transceiver} \n 
+                              port_type: {port_type} \n
                               mode: {port_mode}"""
                         )
                 except ObjectAlreadyExists as err:
