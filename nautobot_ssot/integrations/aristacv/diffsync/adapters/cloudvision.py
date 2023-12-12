@@ -67,7 +67,7 @@ class CloudvisionAdapter(DiffSync):
                     uuid=None,
                 )
                 try:
-                    self.job.logger.info(f"Loaded {index}° device: {new_device['name']}")
+                    self.job.logger.info(f"Loaded {index}° device: {new_device.name}")
                     self.add(new_device)
                 except ObjectAlreadyExists as err:
                     self.job.logger.warning(
