@@ -57,7 +57,6 @@ class CloudvisionAdapter(DiffSync):
                 self.job.logger.warning(f"Error attempting to add CloudVision device. {err}")
 
         for index, dev in enumerate(cloudvision.get_devices(client=self.conn.comm_channel), start=1):
-            self.job.logger.info(f"Loading {index}° device")
             if dev["hostname"] != "":
                 new_device = self.device(
                     name=dev["hostname"],
@@ -68,6 +67,7 @@ class CloudvisionAdapter(DiffSync):
                     uuid=None,
                 )
                 try:
+                    self.job.logger.info(f"Loaded {index}° device: {new_device['name']}")
                     self.add(new_device)
                 except ObjectAlreadyExists as err:
                     self.job.logger.warning(
@@ -185,15 +185,18 @@ class CloudvisionAdapter(DiffSync):
                 new_ip = self.ipaddr(
                     address=intf["address"],
                     interface=intf["interface"],
-                    vrf=cloudvision.get_vrf_interface(
-                        client=self.conn, dId=dev.serial, interface=intf["interface"]
-                    ),
                     device=dev.name,
                     uuid=None,
                 )
                 if self.job.debug:
-                   self.job.logger.info(f"""IP Address interface {intf['interface']} on {dev.name} loaded.
-                    {new_ip.json} """)
+                    self.job.logger.info(
+                        f"""IP Address interface {intf['interface']} on {dev.name} loaded. 
+                                        {new_ip.address},
+                                        {new_ip.interface},
+                                        {new_ip.device},
+                                        {cloudvision.get_vrf_interface(client=self.conn, dId=dev.serial, interface=intf["interface"]),
+                                        }"""
+                    )
                 try:
                     self.add(new_ip)
                 except ObjectAlreadyExists as err:
